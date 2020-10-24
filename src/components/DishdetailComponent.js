@@ -53,7 +53,9 @@ class Dishdetail extends Component {
             
             <div className="col-12 col-md-5 m-1">
                 <h4>Comments</h4>
-                <div>{listComments}</div>
+                <ul className="list-unstyled">
+                    {listComments}
+                </ul>
             </div>
           
             )

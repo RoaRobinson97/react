@@ -42,6 +42,7 @@ class Menu extends Component {
 
         console.log('Render is invoked')
 
+
         return (
           <div className="container">
             <div className="row">
