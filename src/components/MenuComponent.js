@@ -5,7 +5,7 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
 function RenderMenuItem ({dish, onClick}) {
-    
+     
     return (
         <Card>
             <Link to={`/menu/${dish.id}`} >

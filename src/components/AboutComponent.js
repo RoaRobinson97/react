@@ -1,6 +1,10 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardTitle, CardImg, CardBody, CardHeader, CardSubtitle, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import { baseUrl } from '../shared/baseUrl';
+
 
 function RenderLeader({leader}){
 /*
@@ -19,12 +23,19 @@ function RenderLeader({leader}){
         </div>
     );
 */
+
+    
     return (
 
     <div >
+        <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
         <div class="row no-gutters">
         <div class="col-mb-1 px-4 mt-4">
-            <CardImg width="100%" src={leader.image} alt={leader.name} />
+            <CardImg width="100%" src={baseUrl + leader.image} alt={leader.name} />
         </div>
         <div class="col-md-8">
             <div class="card-body">
@@ -34,6 +45,7 @@ function RenderLeader({leader}){
             </div>
         </div>
         </div>
+        </FadeTransform>
     </div>
     
     );
@@ -42,13 +54,32 @@ function RenderLeader({leader}){
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
             <div key={leader.id}>
                 <RenderLeader leader={leader}/>
             </div>
         );
     });
+
+    if (props.leaders.isLoading){
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        )
+    } else if (props.leaders.errMessage){
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.leaders.errMessage}</h4>
+                </div>
+            </div>
+        );
+    }
+    else
 
     return(
         <div className="container">
@@ -104,11 +135,15 @@ function About(props) {
                 <div className="col-12">
                     <h2>Corporate Leadership</h2>
                 </div>
+                <Stagger in>
+
                 <div className="col">
                     <Media list>
                         {leaders}
                     </Media>
                 </div>
+                </Stagger>
+                
             </div>
         </div>
     );
